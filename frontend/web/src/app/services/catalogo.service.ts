@@ -19,7 +19,7 @@ export interface Producto {
 
 @Injectable({ providedIn: 'root' })
 export class CatalogoService {
-  private apiUrl = 'http://localhost:8081/api/catalogo';
+  private apiUrl = 'https://chanieldeluxe-web.onrender.com/api/catalogo';
   constructor(private http: HttpClient) {}
   listar(): Observable<Producto[]> { return this.http.get<Producto[]>(this.apiUrl); }
   listarTodos(): Observable<Producto[]> { return this.http.get<Producto[]>(`${this.apiUrl}/todos`); }

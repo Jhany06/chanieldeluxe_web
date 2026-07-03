@@ -13,7 +13,7 @@ export interface CarritoItem {
 
 @Injectable({ providedIn: 'root' })
 export class CarritoService {
-  private apiUrl = 'http://localhost:8081/api/carrito';
+  private apiUrl = 'https://chanieldeluxe-web.onrender.com/api/carrito';
   count = signal(0);
   constructor(private http: HttpClient) {}
   listar(idUsuario: number): Observable<CarritoItem[]> {

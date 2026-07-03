@@ -17,7 +17,7 @@ export interface Venta {
 
 @Injectable({ providedIn: 'root' })
 export class VentaService {
-  private apiUrl = 'http://localhost:8081/api/ventas';
+  private apiUrl = 'https://chanieldeluxe-web.onrender.com/api/ventas';
   constructor(private http: HttpClient) {}
   crear(data: any): Observable<Venta> { return this.http.post<Venta>(this.apiUrl, data); }
   misPedidos(idUsuario: number): Observable<Venta[]> { return this.http.get<Venta[]>(`${this.apiUrl}/usuario/${idUsuario}`); }

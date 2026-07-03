@@ -16,7 +16,7 @@ export interface Usuario {
 
     @Injectable({ providedIn: 'root' })
     export class AuthService {
-    private apiUrl = 'http://localhost:8081/api';
+    private apiUrl = 'https://chanieldeluxe-web.onrender.com/api';
     currentUser = signal<Usuario | null>(this.loadUser());
 
     constructor(private http: HttpClient) {}
