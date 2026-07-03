@@ -1,0 +1,137 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,248,245,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--sand);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--charcoal);
+  letter-spacing: 0.08em;
+}
+.brand-icon { 
+  color: var(--blush); 
+  font-size: 1rem; 
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.nav-links a {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--warm-gray);
+  transition: color 0.2s;
+}
+.nav-links a:hover, .nav-links a.active { 
+  color: var(--charcoal); 
+}
+.cart-link { 
+  position: relative; 
+  font-size: 1.2rem; 
+}
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: var(--blush);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user-menu { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+}
+.user-name { 
+  font-size: 0.85rem; 
+  color: var(--warm-gray); 
+}
+.btn-logout {
+  font-size: 0.8rem;
+  color: var(--warm-gray);
+  background: none;
+  padding: 6px 12px;
+  border: 1px solid var(--sand);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+.btn-logout:hover { 
+  color: var(--danger); 
+  border-color: var(--danger); 
+}
+.btn-nav-login {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--charcoal) !important;
+}
+.btn-nav-reg {
+  background: var(--charcoal);
+  color: var(--white) !important;
+  padding: 8px 18px;
+  border-radius: 7px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.hamburger { 
+  display: none; 
+  flex-direction: column; 
+  gap: 5px; 
+  background: none; 
+  padding: 4px; }
+
+.hamburger span { 
+  width: 22px; 
+  height: 2px; 
+  background: var(--charcoal); 
+  border-radius: 2px; 
+  display: block; 
+}
+
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: var(--cream);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--sand);
+    gap: 18px;
+  }
+  .nav-links.open { display: flex; }
+}
+
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--charcoal);
+}

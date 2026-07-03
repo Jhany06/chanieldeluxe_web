@@ -1,0 +1,73 @@
+<div class="auth-page">
+  <div class="auth-card card">
+    <div class="auth-head">
+      <span class="brand-sm">CHANIEL DELUXE</span>
+      <h2>Crear cuenta</h2>
+      <p>Únete a nuestra comunidad</p>
+    </div>
+
+    @if(success()) {
+      <div class="alert alert-success">¡Cuenta creada! Redirigiendo al login...</div>
+    } @else {
+      @if(error()) { <div class="alert alert-error">{{error()}}</div> }
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre *</label>
+            <input formControlName="nombre" placeholder="Ana" />
+            @if(nombre.invalid && nombre.touched) {
+              <span class="field-error">Nombre obligatorio (mín. 2 caracteres)</span>
+            }
+          </div>
+          <div class="form-group">
+            <label>Apellido *</label>
+            <input formControlName="apellido" placeholder="García" />
+            @if(apellido.invalid && apellido.touched) {
+              <span class="field-error">Apellido obligatorio (mín. 2 caracteres)</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" formControlName="email" placeholder="tu@email.com" />
+          @if(email.invalid && email.touched) {
+            <span class="field-error">
+              @if(email.errors?.['required']) { Email obligatorio }
+              @if(email.errors?.['email']) { Ingresa un email válido }
+            </span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label>Contraseña * (mín. 6 caracteres)</label>
+          <input type="password" formControlName="contrasena" placeholder="••••••••" />
+          @if(contrasena.invalid && contrasena.touched) {
+            <span class="field-error">
+              @if(contrasena.errors?.['required']) { Contraseña obligatoria }
+              @if(contrasena.errors?.['minlength']) { Mínimo 6 caracteres }
+            </span>
+          }
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Teléfono</label>
+            <input formControlName="telefono" placeholder="999999999" />
+          </div>
+          <div class="form-group">
+            <label>Ciudad</label>
+            <input formControlName="ciudad" placeholder="Lima" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width:100%; justify-content:center;" [disabled]="loading()">
+          @if(loading()) { Creando cuenta... } @else { Crear Cuenta }
+        </button>
+      </form>
+
+      <p class="auth-footer">¿Ya tienes cuenta? <a routerLink="/login">Iniciar sesión</a></p>
+    }
+  </div>
+</div>

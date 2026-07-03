@@ -1,0 +1,65 @@
+<div class="pedidos-page container">
+  <h1>Mis Pedidos</h1>
+
+  @if(loading()) {
+    <div class="spinner"></div>
+  } @else if(pedidos().length === 0) {
+    <div class="empty-state">
+      <div class="icon">📦</div>
+      <p>Aún no tienes pedidos realizados.</p>
+    </div>
+  } @else {
+    <div class="pedidos-list">
+      @for(p of pedidos(); track p.idVenta) {
+        <div class="pedido-card card" (click)="verDetalle(p)">
+          <div class="pedido-head">
+            <div>
+              <span class="pedido-num">Pedido #{{p.idVenta}}</span>
+              <span class="badge" [class]="estadoBadge(p.estado)">{{p.estado | titlecase}}</span>
+            </div>
+            <span class="pedido-fecha">{{p.fechaVenta | date:'dd/MM/yyyy'}}</span>
+          </div>
+          <div class="pedido-body">
+            <p>{{p.detalles?.length || 0}} artículo(s) · Pago: {{p.metodoPago | titlecase}}</p>
+            <p class="pedido-dir">📍 {{p.direccionEnvio}}, {{p.ciudadEnvio}}</p>
+          </div>
+          <div class="pedido-total">
+            <span>Total</span>
+            <strong>S/ {{p.total | number:'1.2-2'}}</strong>
+          </div>
+          <span class="ver-detalle">Ver detalles →</span>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Modal detalle -->
+  @if(pedidoDetalle()) {
+    <div class="modal-overlay" (click)="cerrarDetalle()">
+      <div class="modal card" (click)="$event.stopPropagation()">
+        <div class="modal-head">
+          <h3>Pedido #{{pedidoDetalle()!.idVenta}}</h3>
+          <button class="btn-close" (click)="cerrarDetalle()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="detail-row"><span>Estado</span><span class="badge" [class]="estadoBadge(pedidoDetalle()!.estado)">{{pedidoDetalle()!.estado | titlecase}}</span></div>
+          <div class="detail-row"><span>Fecha</span><span>{{pedidoDetalle()!.fechaVenta | date:'dd/MM/yyyy HH:mm'}}</span></div>
+          <div class="detail-row"><span>Método de pago</span><span>{{pedidoDetalle()!.metodoPago | titlecase}}</span></div>
+          <div class="detail-row"><span>Dirección</span><span>{{pedidoDetalle()!.direccionEnvio}}</span></div>
+          <div class="detail-row"><span>Ciudad</span><span>{{pedidoDetalle()!.ciudadEnvio}}</span></div>
+          <h4 style="margin: 16px 0 10px;">Artículos</h4>
+          @for(d of pedidoDetalle()!.detalles; track d.idProducto) {
+            <div class="detail-row">
+              <span>{{d.nombreProducto}} x{{d.cantidad}}</span>
+              <span>S/ {{d.subtotal | number:'1.2-2'}}</span>
+            </div>
+          }
+          <div class="detail-total">
+            <span>Total</span>
+            <strong>S/ {{pedidoDetalle()!.total | number:'1.2-2'}}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

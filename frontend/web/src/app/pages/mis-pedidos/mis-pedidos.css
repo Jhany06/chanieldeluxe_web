@@ -1,0 +1,121 @@
+.pedidos-page { 
+    padding: 40px 24px 80px; 
+}
+.pedidos-page h1 { 
+    font-size: 2rem; 
+    margin-bottom: 32px; 
+}
+.pedidos-list { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 16px; 
+    max-width: 700px; 
+}
+.pedido-card { 
+    padding: 20px; 
+    cursor: pointer; 
+}
+.pedido-head { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 10px; 
+}
+.pedido-num { 
+    font-weight: 600; 
+    font-size: 0.95rem; 
+    margin-right: 10px; 
+}
+
+.pedido-fecha { 
+    font-size: 0.85rem; 
+    color: var(--warm-gray); 
+}
+
+.pedido-body p { 
+    font-size: 0.85rem; 
+    color: var(--warm-gray); 
+    margin-bottom: 4px; 
+}
+.pedido-dir { 
+    font-size: 0.8rem; 
+}
+
+.pedido-total { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-top: 12px; 
+    padding-top: 12px; 
+    border-top: 1px solid var(--sand); 
+    font-size: 0.9rem; 
+    color: var(--warm-gray); 
+}
+
+.pedido-total strong { 
+    font-size: 1rem; 
+    color: var(--charcoal); 
+}
+.ver-detalle { 
+    font-size: 0.8rem; 
+    color: var(--blush); 
+    font-weight: 500; 
+    display: block; 
+    margin-top: 8px; 
+}
+
+.modal-overlay { 
+    position: fixed; 
+    inset: 0; 
+    background: rgba(0,0,0,0.45); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    z-index: 200; 
+    padding: 24px; 
+}
+
+.modal { 
+    width: 100%; 
+    max-width: 480px; 
+    padding: 28px; 
+    max-height: 80vh; 
+    overflow-y: auto; 
+}
+
+.modal-head { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+.modal-head h3 { 
+    font-size: 1.1rem; 
+}
+.btn-close { 
+    background: none; 
+    font-size: 1.1rem; 
+    color: var(--warm-gray); 
+}
+
+.detail-row { 
+    display: flex; 
+    justify-content: space-between; 
+    font-size: 0.875rem; 
+    padding: 8px 0; 
+    border-bottom: 1px solid var(--sand); 
+}
+.detail-total { 
+    display: flex; 
+    justify-content: space-between; 
+    padding-top: 14px; 
+    font-weight: 700; 
+    font-size: 1rem; 
+}
+
+.pedidos-list { 
+    margin: 0 auto; 
+}
+.modal { 
+    margin: auto; 
+}

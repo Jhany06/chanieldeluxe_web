@@ -1,0 +1,101 @@
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content container">
+    <span class="tag">Nueva Colección 2026</span>
+    <h1 class="hero-title">Chaniel<br><em>Deluxe</em></h1>
+    <p class="hero-sub">Prendas cuidadosamente seleccionadas para tu estilo único. Calidad, comodidad y elegancia en cada pieza.</p>
+    <div class="hero-actions">
+      <a routerLink="/catalogo" class="btn-primary">Ver Catálogo</a>
+      @if(!auth.isLoggedIn()) {
+        <a routerLink="/login" class="btn-secondary">Iniciar Sesión</a>
+        <a routerLink="/registro" class="btn-blush">Crear Cuenta</a>
+      }
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img-wrap">
+      <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=700&q=80" alt="Fashion hero" />
+    </div>
+    <div class="hero-badge">
+      <span class="badge-num">500+</span>
+      <span class="badge-lbl">Prendas disponibles</span>
+    </div>
+  </div>
+</section>
+
+<!-- DESTACADOS -->
+<section class="page-section bg-sand">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">Más vendidos</span>
+      <h2>Productos Destacados</h2>
+    </div>
+    @if(destacados().length === 0) {
+      <div class="empty-state">
+        <div class="spinner"></div>
+      </div>
+    } @else {
+      <div class="products-grid">
+        @for(p of destacados(); track p.idProducto) {
+          <div class="product-card card">
+            <div class="product-img">
+              <img [src]="imagenUrl(p)" [alt]="p.nombre" />
+              @if(p.precioOferta) {
+                <span class="oferta-badge">Oferta</span>
+              }
+            </div>
+            <div class="product-info">
+              <span class="product-cat">{{p.categoria | titlecase}}</span>
+              <h3>{{p.nombre}}</h3>
+              <div class="product-price">
+                @if(p.precioOferta) {
+                  <span class="price-old">S/ {{p.precioUnitario | number:'1.2-2'}}</span>
+                  <span class="price-new">S/ {{p.precioOferta | number:'1.2-2'}}</span>
+                } @else {
+                  <span class="price-new">S/ {{p.precioUnitario | number:'1.2-2'}}</span>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+      <div style="text-align:center; margin-top:40px;">
+        <a routerLink="/catalogo" class="btn-primary">Ver todo el catálogo</a>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- CTA -->
+@if(!auth.isLoggedIn()) {
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-inner">
+        <div>
+          <h2>¿Lista para renovar tu guardarropa?</h2>
+          <p>Regístrate y obtén acceso a ofertas exclusivas y novedades.</p>
+        </div>
+        <div style="display:flex; gap:12px;">
+          <a routerLink="/login" class="btn-secondary" style="border-color:white; color:white;">Iniciar Sesión</a>
+          <a routerLink="/registro" class="btn-blush">Crear Cuenta</a>
+        </div>
+      </div>
+    </div>
+  </section>
+}
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="brand-footer">CHANIEL DELUXE</span>
+      <p>Moda con carácter, hecha para ti.</p>
+    </div>
+    <div class="footer-links">
+      <a routerLink="/catalogo">Catálogo</a>
+      @if(!auth.isLoggedIn()) {
+        <a routerLink="/login">Mi Cuenta</a>
+      }
+    </div>
+  </div>
+  <p class="footer-copy">© 2026 Chaniel Deluxe. Todos los derechos reservados.</p>
+</footer>

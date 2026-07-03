@@ -1,0 +1,186 @@
+@if(toast()) {
+  <div class="toast" [class.toast-error]="toastType()==='error'">{{toast()}}</div>
+}
+
+<div class="admin-page container">
+  <div class="admin-header">
+    <h1>Panel de Administración</h1>
+    <p>Bienvenido, {{auth.currentUser()?.nombre}}</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn" [class.active]="tab()==='productos'" (click)="tab.set('productos')">Productos</button>
+    <button class="tab-btn" [class.active]="tab()==='ventas'" (click)="tab.set('ventas')">Ventas</button>
+  </div>
+
+  @if(tab()==='productos') {
+    <div class="tab-content">
+      <div class="content-header">
+        <h2>Catálogo ({{productos().length}})</h2>
+        <button class="btn-primary" (click)="abrirForm()">+ Nuevo Producto</button>
+      </div>
+      @if(loading()) {
+        <div class="spinner"></div>
+      } @else {
+        <div class="table-wrap card">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Categoría</th>
+                <th>Talla</th>
+                <th>Color</th>
+                <th>Precio</th>
+                <th>Oferta</th>
+                <th>Stock</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(p of productos(); track p.idProducto) {
+                <tr>
+                  <td>
+                    <div class="prod-cell">
+                      @if(p.imagenUrl) {
+                        <img [src]="p.imagenUrl" [alt]="p.nombre" class="prod-thumb" />
+                      }
+                      <strong>{{p.nombre}}</strong>
+                    </div>
+                  </td>
+                  <td>{{p.categoria | titlecase}}</td>
+                  <td><span class="talla-pill">{{p.talla}}</span></td>
+                  <td>{{p.color || '—'}}</td>
+                  <td>S/ {{p.precioUnitario | number:'1.2-2'}}</td>
+                  <td>@if(p.precioOferta){ S/ {{p.precioOferta | number:'1.2-2'}} }@else{ — }</td>
+                  <td>{{p.stockDisponible ?? 0}}</td>
+                  <td><span class="badge" [class]="p.estado==='activo' ? 'badge-success' : 'badge-danger'">{{p.estado}}</span></td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="btn-edit" (click)="abrirForm(p)">Editar</button>
+                      <button class="btn-del" (click)="eliminar(p.idProducto)">Eliminar</button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+  }
+
+  @if(tab()==='ventas') {
+    <div class="tab-content">
+      <div class="content-header">
+        <h2>Todas las ventas ({{ventas().length}})</h2>
+      </div>
+      <div class="table-wrap card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Cliente</th>
+              <th>Fecha</th>
+              <th>Total</th>
+              <th>Pago</th>
+              <th>Estado</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(v of ventas(); track v.idVenta) {
+              <tr>
+                <td>{{v.idVenta}}</td>
+                <td>{{v.nombreUsuario}}</td>
+                <td>{{v.fechaVenta | date:'dd/MM/yyyy'}}</td>
+                <td>S/ {{v.total | number:'1.2-2'}}</td>
+                <td>{{v.metodoPago | titlecase}}</td>
+                <td><span class="badge" [class]="estadoBadge(v.estado)">{{v.estado | titlecase}}</span></td>
+                <td>
+                  <select class="estado-select" [value]="v.estado" (change)="cambiarEstado(v, $any($event.target).value)">
+                    @for(e of estadosVenta; track e) {
+                      <option [value]="e">{{e | titlecase}}</option>
+                    }
+                  </select>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</div>
+
+@if(showForm()) {
+  <div class="modal-overlay" (click)="showForm.set(false)">
+    <div class="modal card" (click)="$event.stopPropagation()">
+      <div class="modal-head">
+        <h3>{{editando() ? 'Editar Producto' : 'Nuevo Producto'}}</h3>
+        <button class="btn-close" (click)="showForm.set(false)">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre *</label>
+            <input [(ngModel)]="form.nombre" placeholder="Nombre del producto" />
+          </div>
+          <div class="form-group">
+            <label>Color</label>
+            <input [(ngModel)]="form.color" placeholder="Azul marino" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea [(ngModel)]="form.descripcion" rows="2" placeholder="Descripción del producto..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Categoría *</label>
+            <select [(ngModel)]="form.categoria">
+              @for(c of categorias; track c) { <option [value]="c">{{c | titlecase}}</option> }
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Talla *</label>
+            <select [(ngModel)]="form.talla">
+              @for(t of tallas; track t) { <option [value]="t">{{t}}</option> }
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Precio unitario (S/) *</label>
+            <input type="number" [(ngModel)]="form.precioUnitario" min="0" step="0.01" />
+          </div>
+          <div class="form-group">
+            <label>Precio oferta (S/)</label>
+            <input type="number" [(ngModel)]="form.precioOferta" min="0" step="0.01" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Stock disponible</label>
+            <input type="number" [(ngModel)]="form.stockDisponible" min="0" />
+          </div>
+          <div class="form-group">
+            <label>Material</label>
+            <input [(ngModel)]="form.material" placeholder="Algodón, polyester..." />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>URL de imagen</label>
+          <input [(ngModel)]="form.imagenUrl" placeholder="https://images.unsplash.com/..." />
+          @if(form.imagenUrl) {
+            <img [src]="form.imagenUrl" alt="preview" class="img-preview" />
+          }
+        </div>
+        <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:20px;">
+          <button class="btn-secondary" (click)="showForm.set(false)">Cancelar</button>
+          <button class="btn-primary" (click)="guardar()">{{editando() ? 'Guardar cambios' : 'Crear producto'}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

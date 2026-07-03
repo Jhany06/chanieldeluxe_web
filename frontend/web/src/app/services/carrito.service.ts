@@ -1,0 +1,39 @@
+import { Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
+
+export interface CarritoItem {
+  idCarrito: number;
+  idProducto: number;
+  nombreProducto: string;
+  cantidad: number;
+  precioUnitario: number;
+  subtotal: number;
+}
+
+@Injectable({ providedIn: 'root' })
+export class CarritoService {
+  private apiUrl = 'http://localhost:8081/api/carrito';
+  count = signal(0);
+  constructor(private http: HttpClient) {}
+  listar(idUsuario: number): Observable<CarritoItem[]> {
+    return this.http.get<CarritoItem[]>(`${this.apiUrl}/${idUsuario}`).pipe(
+      tap(items => this.count.set(items.length))
+    );
+  }
+  agregar(idUsuario: number, idProducto: number, cantidad: number = 1): Observable<CarritoItem> {
+    return this.http.post<CarritoItem>(this.apiUrl, { idUsuario, idProducto, cantidad }).pipe(
+      tap(() => this.count.update(c => c + 1))
+    );
+  }
+  eliminarItem(idCarrito: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/item/${idCarrito}`).pipe(
+      tap(() => this.count.update(c => Math.max(0, c - 1)))
+    );
+  }
+  vaciar(idUsuario: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/vaciar/${idUsuario}`).pipe(
+      tap(() => this.count.set(0))
+    );
+  }
+}

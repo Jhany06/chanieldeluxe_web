@@ -1,0 +1,43 @@
+<div class="auth-page">
+  <div class="auth-card card">
+    <div class="auth-head">
+      <span class="brand-sm">CHANIEL DELUXE</span>
+      <h2>Bienvenida de vuelta</h2>
+      <p>Inicia sesión para continuar</p>
+    </div>
+
+    @if(error()) {
+      <div class="alert alert-error">{{error()}}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" formControlName="email" placeholder="tu@email.com" />
+        @if(email.invalid && email.touched) {
+          <span class="field-error">
+            @if(email.errors?.['required']) { El email es obligatorio }
+            @if(email.errors?.['email']) { Ingresa un email válido }
+          </span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" formControlName="contrasena" placeholder="••••••••" />
+        @if(contrasena.invalid && contrasena.touched) {
+          <span class="field-error">
+            @if(contrasena.errors?.['required']) { La contraseña es obligatoria }
+            @if(contrasena.errors?.['minlength']) { Mínimo 6 caracteres }
+          </span>
+        }
+      </div>
+
+      <button type="submit" class="btn-primary" style="width:100%; justify-content:center;" [disabled]="loading()">
+        @if(loading()) { Cargando... } @else { Iniciar Sesión }
+      </button>
+    </form>
+
+    <p class="auth-footer">¿No tienes cuenta? <a routerLink="/registro">Regístrate gratis</a></p>
+  </div>
+</div>

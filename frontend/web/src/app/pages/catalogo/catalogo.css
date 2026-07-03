@@ -1,0 +1,250 @@
+.catalogo-page { 
+  padding: 40px 24px 80px; 
+}
+
+.page-header { 
+  margin-bottom: 32px; 
+}
+.page-header h1 { 
+  font-size: 2rem; 
+  color: var(--charcoal); 
+  margin-bottom: 4px; 
+}
+.page-header p { 
+  color: var(--warm-gray); 
+  font-size: 0.9rem; 
+}
+
+.catalogo-layout { 
+  display: grid; 
+  grid-template-columns: 260px 1fr; 
+  gap: 32px; 
+  align-items: start; 
+}
+
+.filters { 
+  background: var(--white); 
+  border-radius: 12px; 
+  padding: 24px; 
+  box-shadow: var(--card-shadow); 
+  position: sticky; 
+  top: 80px; 
+}
+.filter-head { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 24px; 
+}
+
+.filter-head h3 { 
+  font-size: 1rem; 
+  color: var(--charcoal); 
+}
+
+.btn-clear { 
+  font-size: 0.8rem; 
+  color: var(--blush); 
+  background: none; 
+  font-weight: 500; 
+}
+.filter-group {
+  margin-bottom: 20px; 
+}
+
+.filter-label { 
+  display: block; 
+  font-size: 0.8rem; 
+  font-weight: 600; 
+  color: var(--warm-gray); 
+  text-transform: uppercase; 
+  letter-spacing: 0.06em; 
+  margin-bottom: 10px; 
+}
+
+.talla-grid { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 6px; 
+}
+
+.talla-btn {
+  padding: 5px 10px; 
+  font-size: 0.8rem; 
+  font-weight: 500;
+  border: 1.5px solid var(--sand); 
+  border-radius: 6px;
+  background: var(--white); 
+  color: var(--charcoal);
+  transition: all 0.2s;
+}
+.talla-btn:hover, .talla-btn.active { 
+  border-color: var(--charcoal); 
+  background: var(--charcoal); 
+  color: var(--white); }
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.product-card { 
+  overflow: hidden; 
+}
+.product-img { 
+  aspect-ratio: 3/4; 
+  position: relative; 
+  overflow: hidden; 
+  background: var(--sand); 
+}
+
+.product-img img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  transition: transform 0.4s; 
+}
+
+.product-card:hover .product-img img { 
+  transform: scale(1.04); 
+}
+.oferta-badge {
+  position: absolute; top: 10px; 
+  left: 10px;
+  background: var(--blush); 
+  color: white;
+  font-size: 0.68rem; 
+  font-weight: 700; 
+  padding: 3px 8px; 
+  border-radius: 20px; 
+  text-transform: uppercase;
+}
+.agotado-badge {
+  position: absolute; 
+  top: 10px; 
+  right: 10px;
+  background: rgba(28,28,30,0.75); 
+  color: white;
+  font-size: 0.68rem; 
+  font-weight: 700; 
+  padding: 3px 8px; 
+  border-radius: 20px; 
+  text-transform: uppercase;
+}
+.product-body { 
+  padding: 14px; 
+}
+
+.product-meta { 
+  display: flex; 
+  gap: 8px; 
+  margin-bottom: 6px; 
+  flex-wrap: wrap; 
+}
+
+.cat-label { 
+  font-size: 0.7rem; 
+  text-transform: uppercase; 
+  letter-spacing: 0.06em; 
+  color: var(--warm-gray); 
+  font-weight: 600; 
+}
+
+.talla-label { 
+  font-size: 0.7rem; 
+  font-weight: 700; 
+  color: var(--charcoal); 
+  background: var(--sand); 
+  padding: 1px 8px; 
+  border-radius: 4px; 
+}
+.product-body h3 { 
+  font-family: 'Playfair Display', serif; 
+  font-size: 0.95rem; 
+  margin: 4px 0 4px; 
+  color: var(--charcoal); 
+}
+.product-detail { 
+  font-size: 0.8rem; 
+  color: var(--warm-gray); 
+  margin-bottom: 8px; 
+}
+.product-price { 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+  margin-bottom: 8px; 
+}
+.price-old { 
+  font-size: 0.8rem; 
+  color: var(--warm-gray); 
+  text-decoration: line-through; 
+}
+.price-new { 
+  font-size: 1rem; 
+  font-weight: 700; 
+  color: var(--charcoal); 
+}
+.product-stock { 
+  margin-bottom: 12px; 
+}
+.btn-add {
+  width: 100%; 
+  padding: 10px; 
+  font-size: 0.85rem; 
+  font-weight: 600;
+  background: var(--charcoal); 
+  color: white; 
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+.btn-add:hover:not(:disabled) { 
+  background: var(--blush); 
+}
+
+.btn-add:disabled { 
+  background: var(--sand); 
+  color: var(--warm-gray); cursor: not-allowed; }
+
+.toast {
+  position: fixed; 
+  bottom: 24px; 
+  right: 24px;
+  background: var(--charcoal); 
+  color: white;
+  padding: 14px 20px; 
+  border-radius: 10px;
+  font-size: 0.875rem; 
+  font-weight: 500;
+  z-index: 999; 
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  animation: slideIn 0.3s ease;
+}
+.toast.toast-error { 
+  background: var(--danger); 
+}
+@keyframes slideIn { from { 
+  transform: translateY(20px); 
+  opacity: 0; } to { 
+    transform: translateY(0); opacity: 1; 
+  } 
+}
+
+@media(max-width: 1000px) { 
+  .catalogo-layout { 
+    grid-template-columns: 1fr; 
+  } .filters { 
+    position: static; 
+  } 
+}
+@media(max-width: 700px) { 
+  .products-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+  } 
+}
+@media(max-width: 420px) { 
+  .products-grid { 
+    grid-template-columns: 1fr; 
+  } 
+}
